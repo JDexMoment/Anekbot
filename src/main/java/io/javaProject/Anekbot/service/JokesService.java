@@ -11,4 +11,5 @@ public interface JokesService {
     Optional<Jokes> getJokeById(Long id);
     void deleteJokeById(Long id);
     void putJokeById(Long id, String joke);
+
 }

@@ -13,14 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/jokes")
-public class JokesController {
+public class JokesGetController {
 
     private final JokesService jokesService;
-
-    @PostMapping
-    ResponseEntity<Jokes> registerJokes(@RequestBody Jokes jokes) {
-        return ResponseEntity.ok(jokesService.registerJokes(jokes));
-    }
 
     @GetMapping
     ResponseEntity<List<Jokes>> getJokes(){
@@ -32,17 +27,5 @@ public class JokesController {
         return jokesService.getJokeById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<Jokes> deleteJokeById(@PathVariable Long id) {
-        jokesService.deleteJokeById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Jokes> putJokeById(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        String newJoke = body.get("joke");
-        jokesService.putJokeById(id, newJoke);
-        return ResponseEntity.noContent().build();
-    }
 
 }

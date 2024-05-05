@@ -15,13 +15,17 @@ import java.time.LocalDateTime;
 public class Jokes {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "joke_seq_gen")
+    @SequenceGenerator(name = "joke_seq_gen", sequenceName = "joke_seq", allocationSize = 1)
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "joke")
     private String joke;
+
     @Column(name = "joke_download")
     private LocalDateTime date_of_birth;
+
     @Column(name = "joke_change")
     private LocalDateTime date_of_change;
 
@@ -34,5 +38,6 @@ public class Jokes {
     protected void onUpdate() {
         date_of_change = LocalDateTime.now(); // Устанавливаем текущую дату и время при обновлении записи
     }
+
 
 }
