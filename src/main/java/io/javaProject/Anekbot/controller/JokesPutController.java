@@ -18,10 +18,9 @@ public class JokesPutController {
     private final JokesService jokesService;
 
     @PutMapping("/{id}")
-    public ResponseEntity<Jokes> putJokeById(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        String newJoke = body.get("joke");
-        jokesService.putJokeById(id, newJoke);
-        return ResponseEntity.noContent().build();
+    ResponseEntity<Void> updateJoke(@PathVariable Long id, @RequestBody Jokes updatedJoke) {
+        jokesService.putJokeById(id, updatedJoke);
+        return ResponseEntity.ok().build();
     }
 
 }

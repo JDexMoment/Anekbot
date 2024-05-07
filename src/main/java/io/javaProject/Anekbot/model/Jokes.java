@@ -2,8 +2,8 @@ package io.javaProject.Anekbot.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,20 +24,16 @@ public class Jokes {
     private String joke;
 
     @Column(name = "joke_download")
-    private LocalDateTime date_of_birth;
+    private Date date_of_birth;
 
     @Column(name = "joke_change")
-    private LocalDateTime date_of_change;
+    private Date date_of_change;
 
-    @PrePersist
-    protected void onCreate() {
-        date_of_birth = LocalDateTime.now(); // Устанавливаем текущую дату и время при создании записи
+    @OneToMany(mappedBy = "jokeId", cascade = CascadeType.ALL)
+    private List<JokesHistory> jokesHistory;
+
+    public Jokes(String joke, Date date_of_birth) {
+        this.joke = joke;
+        this.date_of_birth = date_of_birth;
     }
-
-    @PreUpdate
-    protected void onUpdate() {
-        date_of_change = LocalDateTime.now(); // Устанавливаем текущую дату и время при обновлении записи
-    }
-
-
 }

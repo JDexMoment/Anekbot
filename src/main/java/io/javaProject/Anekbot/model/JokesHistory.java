@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @EqualsAndHashCode
 @Getter
@@ -27,5 +27,5 @@ public class JokesHistory {
     private Jokes jokeId;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Date date;
 }

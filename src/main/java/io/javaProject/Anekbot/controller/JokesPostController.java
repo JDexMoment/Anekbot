@@ -1,8 +1,6 @@
 package io.javaProject.Anekbot.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import java.util.Date;
 
 import lombok.RequiredArgsConstructor;
 import io.javaProject.Anekbot.model.Jokes;
@@ -18,7 +16,9 @@ public class JokesPostController {
     private final JokesService jokesService;
 
     @PostMapping
-    ResponseEntity<Jokes> registerJokes(@RequestBody Jokes jokes) {
-        return ResponseEntity.ok(jokesService.registerJokes(jokes));
+    ResponseEntity<Void> registerJokes(@RequestBody Jokes jokes) {
+        jokes.setDate_of_birth(new Date());
+        jokesService.registerJokes(jokes);
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,12 +1,13 @@
 package io.javaProject.Anekbot.service;
 
-import com.pengrad.telegrambot.TelegramBot;
 import lombok.RequiredArgsConstructor;
 import io.javaProject.Anekbot.model.Jokes;
 import io.javaProject.Anekbot.repository.JokesRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -16,16 +17,14 @@ public class JokesServiceImpl implements JokesService {
 
     private final JokesRepository jokesRepository;
 
-    private final TelegramBot telegramBot;
-
     @Override
-    public Jokes registerJokes(Jokes jokes) {
-        return jokesRepository.save(jokes);
+    public void registerJokes(Jokes joke) {
+        jokesRepository.save(joke);
     }
 
     @Override
-    public List<Jokes> getAllJokes() {
-        return jokesRepository.findAll();
+    public Page<Jokes> getJokes(Pageable pageable) {
+        return jokesRepository.findAll(pageable);
     }
 
     @Override
@@ -34,20 +33,31 @@ public class JokesServiceImpl implements JokesService {
     }
 
     @Override
-    public void deleteJokeById(Long id) {
-        jokesRepository.deleteById(id);
+    public boolean deleteJokeById(Long id) {
+        Optional<Jokes> joke = jokesRepository.findById(id);
+        if (joke.isPresent()) {
+            jokesRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void putJokeById(Long id, String newJoke) {
-        Optional<Jokes> optionalJoke = jokesRepository.getJokesById(id);
-        if (optionalJoke.isPresent()) {
-            Jokes jokeToUpdate = optionalJoke.get();
-            jokeToUpdate.setJoke(newJoke); // Устанавливаем новую шутку
-            jokesRepository.save(jokeToUpdate);
-        } else {
-            throw new Error("Joke not found with id: " + id);
+    public void putJokeById(Long id, Jokes updatedJoke) {
+        Optional<Jokes> existingJoke = jokesRepository.findById(id);
+        if (existingJoke.isPresent()) {
+            existingJoke.get().setJoke(updatedJoke.getJoke());
+            existingJoke.get().setDate_of_change(new Date());
+            jokesRepository.save(existingJoke.get());
         }
     }
+
+    @Override
+    public Jokes getRandomJoke() {
+        return jokesRepository.findRandomJoke();
+    }
+
+    @Override
+    public Page<Jokes> getTopJokes(Pageable pageable) { return jokesRepository.findTop5ByOrderByJokesHistoryDesc(pageable); }
 
 }

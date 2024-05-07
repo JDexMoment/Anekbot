@@ -18,8 +18,11 @@ public class JokesDeleteController {
     private final JokesService jokesService;
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Jokes> deleteJokeById(@PathVariable Long id) {
-        jokesService.deleteJokeById(id);
-        return ResponseEntity.noContent().build();
+    ResponseEntity<Void> deleteJokeById(@PathVariable Long id) {
+        if (jokesService.deleteJokeById(id)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
