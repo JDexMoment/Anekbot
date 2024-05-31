@@ -24,8 +24,8 @@ public class SpringSecurityConfiguration {
                         expressionInterceptUrlRegistry
                                 .requestMatchers("/registration", "/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/jokes").hasAuthority(UserAuthority.PLACE_ORDERS.getAuthority())
-                                .requestMatchers(HttpMethod.GET, "/jokes/**").hasAuthority(UserAuthority.MANAGE_ORDERS.getAuthority())
-                                .requestMatchers(HttpMethod.POST, "/items").hasAuthority(UserAuthority.MANAGE_ORDERS.getAuthority())
+                                .requestMatchers(HttpMethod.PUT, "/jokes/**").hasAuthority(UserAuthority.MANAGE_ORDERS.getAuthority())
+                                .requestMatchers(HttpMethod.DELETE, "/jokes/**").hasAuthority(UserAuthority.MANAGE_ORDERS.getAuthority())
                                 .anyRequest().hasAuthority(UserAuthority.FULL.getAuthority()))
                 .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);

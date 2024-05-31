@@ -39,6 +39,11 @@ databaseChangeLog:
       id: 1716399859088-5
       author: evgen (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: jokes
       changes:
         - createTable:
             columns:
@@ -63,6 +68,11 @@ databaseChangeLog:
       id: 1716399859088-6
       author: evgen (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: jokes_history
       changes:
         - createTable:
             columns:
@@ -84,6 +94,11 @@ databaseChangeLog:
       id: 1716399859088-7
       author: evgen (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: user_roles
       changes:
         - createTable:
             columns:
@@ -105,6 +120,11 @@ databaseChangeLog:
       id: 1716399859088-8
       author: evgen (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: users
       changes:
         - createTable:
             columns:
